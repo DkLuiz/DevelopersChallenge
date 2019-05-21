@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "Registration and Management Your Own Tournament";
+}
+<@ Application Language="C#" CodeBehind="App_Code\Global.asax.cs" Inherits="Global" >
+<div>
+    <ul>
+        <li>
+            To load a tournament already created, simply enter the name of the tournament.
+        </li>
+        <li>
+            Each time a new tournament is loaded it is saved.
+        </li>
+        <li>
+            The exclusion of the tournament was not implemented.
+        </li>
+    </ul>
+</div>
+<div>
+    <ul style="list-style:none;">
+        <li style="margin-bottom:5px;">
+            <div>
+                <span>Tournament Name:</span>
+                <input id="idTournament" type="text" />
+
+                <span>Teams:</span>
+                <input id="idTeams" type="text" />
+                <input id="idAddTeams" value="Add Team" onclick="addTeams()" type="button" />
+                <input id="idLoadTournament" value="Load Tournament" onclick="loadTournament()" type="button" />
+                <input id="idClearTournament" value="Clear Tournament" type="submit" />
+            </div>
+        </li>
+        <li style="border-bottom:5px solid #6f6d6d">
+            <label id="TeamsAdded"></label>
+        </li>
+    </ul>
+
+</div>
+<div class="tournament"></div>
+
