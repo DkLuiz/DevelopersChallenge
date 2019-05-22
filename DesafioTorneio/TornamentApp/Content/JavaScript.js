@@ -99,9 +99,14 @@ function changeToButtons() {
 function addTeams() {
     if (participants.length <= 32) {
         if ($('#idTeams').val() != "" || $('#idTeams').val() != undefined) {
-            participants.push({ NameTeam: $('#idTeams').val(), Step: 1 });
-            quantity = quantity + 1;
-            $('#TeamsAdded').text('number of times added:' + quantity);
+            var objIndex = participants.findIndex((obj => obj.NameTeam == $('#idTeams').val())); debugger;
+            if (objIndex < 0) {
+                participants.push({ NameTeam: $('#idTeams').val(), Step: 1 });
+                quantity = quantity + 1;
+                $('#TeamsAdded').text('number of times added:' + quantity);
+            } else {
+                alert("Invalid name for Team!");
+            }
         } else {
             alert("Name is required");
         }
