@@ -76,7 +76,7 @@ function loadButtons() {
 
     var $empty = $('li:empty');
     for (var i = 0; i < participants.length; i++) {
-        $empty.eq(i).html('<button>' + participants[i] + '</button>');
+        $empty.eq(i).html('<button>' + participants[i].NameTeam + '</button>');
     }
 }
 
@@ -99,7 +99,7 @@ function changeToButtons() {
 function addTeams() {
     if (participants.length <= 32) {
         if ($('#idTeams').val() != "" || $('#idTeams').val() != undefined) {
-            participants.push($('#idTeams').val());
+            participants.push({ NameTeam: $('#idTeams').val(), Step: 1 });
             quantity = quantity + 1;
             $('#TeamsAdded').text('number of times added:' + quantity);
         } else {
@@ -115,25 +115,37 @@ function loadTournament() {
     $("ul").remove(".bracket");
     $tournament = $('.tournament'),
     $bracket = $('<ul class="bracket"><li></li><li></li></ul>');
-    quantity = "";
+    quantity = participants.length;
     buildBracket($tournament);
     chargerBrackets();
     loadButtons();
-    changeToButtons();
+    var url = "/Tournament/SaveOrUpdateTournament";
+    $.post(url, { tournament: obterTournament() },
+        function (retorno) {
+            alert("sucesso!");
+        }
+     );
 }
 
-function obterTournament(participants) {
+function obterTournament() {
     var nameTournament = $("#idTournament").val()
-
-
+    return {
+        NameTournament: nameTournament,
+        TimesList: participants
+    }
 }
 
 $("#idClearTournament").click(function () {
     $("ul").remove(".bracket");
+    $('#TeamsAdded').text("")
 });
 
 $(document).on('click', 'button', function () {
     var $ul;
+
+    var objIndex = participants.findIndex((obj => obj.NameTeam == $(this).text()));
+    participants[objIndex].Step = participants[objIndex].Step + 1;
+
     if (!$(this).hasClass('winner')) {
         $ul = $(this).parent().parent();
     }
